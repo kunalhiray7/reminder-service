@@ -4,6 +4,7 @@ import com.smartcar.voicesystem.reminderservice.ObjectMapperUtil.getObjectMapper
 import com.smartcar.voicesystem.reminderservice.controllers.MessageConverter.jacksonDateTimeConverter
 import com.smartcar.voicesystem.reminderservice.domain.Reminder
 import com.smartcar.voicesystem.reminderservice.dtos.ReminderRequest
+import com.smartcar.voicesystem.reminderservice.exceptions.ReminderCreateConditionUnmetException
 import com.smartcar.voicesystem.reminderservice.services.RemindersService
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -52,10 +53,26 @@ class RemindersControllerTest {
         doReturn(reminder).`when`(remindersService).create(reminderRequest)
 
         mockMvc.perform(post("/api/reminders")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(reminderRequest)))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(mapper.writeValueAsString(reminderRequest)))
                 .andExpect(status().isCreated)
                 .andExpect(content().string(mapper.writeValueAsString(reminder)))
+
+        verify(remindersService, times(1)).create(reminderRequest)
+    }
+
+    @Test
+    fun `POST should return CONFLICT when user does not exist for given reminder`() {
+        val reminderRequest = ReminderRequest(
+                userId = 123L,
+                reminder = "Hey Mercedes, add a new dentist appointment for 10th of November as my reminder")
+        doThrow(ReminderCreateConditionUnmetException("Not able to create a reminder as user does not exist"))
+                .`when`(remindersService).create(reminderRequest)
+
+        mockMvc.perform(post("/api/reminders")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(mapper.writeValueAsString(reminderRequest)))
+                .andExpect(status().isConflict)
 
         verify(remindersService, times(1)).create(reminderRequest)
     }

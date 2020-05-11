@@ -30,3 +30,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### In memory DB ###
+h2/
