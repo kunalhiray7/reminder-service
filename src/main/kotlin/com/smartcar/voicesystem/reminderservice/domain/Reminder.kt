@@ -23,8 +23,11 @@ data class Reminder(
         val reminder: String = "",
 
         @get: NotNull
-        val dueTime: ZonedDateTime = ZonedDateTime.now(UTC),
+        val dueDate: ZonedDateTime = ZonedDateTime.now(UTC),
 
         @get: NotNull
-        val createdAt: ZonedDateTime = ZonedDateTime.now(UTC)
+        val createdAt: ZonedDateTime = ZonedDateTime.now(UTC),
+
+        @get: NotNull
+        val type: ReminderType = ReminderType.GENERAL
 )

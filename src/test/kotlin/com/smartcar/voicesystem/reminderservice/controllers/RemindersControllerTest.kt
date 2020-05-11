@@ -47,7 +47,7 @@ class RemindersControllerTest {
                 id = 234L,
                 userId = reminderRequest.userId,
                 reminder = reminderRequest.reminder,
-                dueTime = ZonedDateTime.of(2020, 9, 10, 0, 0, 0, 0, UTC),
+                dueDate = ZonedDateTime.of(2020, 9, 10, 0, 0, 0, 0, UTC),
                 createdAt = ZonedDateTime.now(UTC)
         )
         doReturn(reminder).`when`(remindersService).create(reminderRequest)
