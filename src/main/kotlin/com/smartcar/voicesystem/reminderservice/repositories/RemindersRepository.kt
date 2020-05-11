@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface RemindersRepository: JpaRepository<Reminder, Long>
+interface RemindersRepository: JpaRepository<Reminder, Long> {
+    fun findByUserId(userId: Long): List<Reminder>
+}

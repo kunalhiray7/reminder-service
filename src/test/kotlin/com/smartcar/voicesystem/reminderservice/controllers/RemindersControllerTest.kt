@@ -76,4 +76,52 @@ class RemindersControllerTest {
 
         verify(remindersService, times(1)).create(reminderRequest)
     }
+
+    @Test
+    fun `POST should return BAD_REQUEST when reminder request is not valid`() {
+        val reminderRequest = ReminderRequest(
+                userId = 123L,
+                reminder = "")
+
+        mockMvc.perform(post("/api/reminders")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(reminderRequest)))
+                .andExpect(status().isBadRequest)
+
+        verifyNoInteractions(remindersService)
+    }
+
+    @Test
+    fun `GET should return the reminders for the user`() {
+        val userId = 123L
+        val reminders = listOf(Reminder(
+                id = 234L,
+                userId = userId,
+                reminder = "Hey Mercedes, add a new dentist appointment for 10th of November as my reminder",
+                dueDate = ZonedDateTime.of(2020, 9, 10, 0, 0, 0, 0, UTC),
+                createdAt = ZonedDateTime.now(UTC)
+        ), Reminder(
+                id = 234L,
+                userId = userId,
+                reminder = "Hey Mercedes, add a reminder as I want to go for shopping on 13th of November",
+                dueDate = ZonedDateTime.of(2020, 9, 13, 0, 0, 0, 0, UTC),
+                createdAt = ZonedDateTime.now(UTC)
+        ))
+        doReturn(reminders).`when`(remindersService).getForUser(userId)
+
+        mockMvc.perform(get("/api/reminders?userId=$userId"))
+                .andExpect(status().isOk)
+                .andExpect(content().string(mapper.writeValueAsString(reminders)))
+
+        verify(remindersService, times(1)).getForUser(userId)
+    }
+
+    @Test
+    fun `GET should return BAD_REQUEST when userId not provided as request parameter`() {
+
+        mockMvc.perform(get("/api/reminders"))
+                .andExpect(status().isBadRequest)
+
+        verifyNoInteractions(remindersService)
+    }
 }

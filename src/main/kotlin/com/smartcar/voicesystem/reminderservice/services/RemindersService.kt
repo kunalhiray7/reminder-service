@@ -17,4 +17,6 @@ class RemindersService(private val remindersRepository: RemindersRepository) {
         return remindersRepository.save(reminder)
     }
 
+    fun getForUser(userId: Long): List<Reminder> = remindersRepository.findByUserId(userId)
+
 }
