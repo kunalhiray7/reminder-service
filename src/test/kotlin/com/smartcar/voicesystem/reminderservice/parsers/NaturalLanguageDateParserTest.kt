@@ -28,7 +28,6 @@ class NaturalLanguageDateParserTest {
 
         assertEquals(Month.JULY, dueDate.month)
         assertEquals(1, dueDate.dayOfMonth)
-        assertEquals(30, dueDate.minute)
     }
 
     @Test
