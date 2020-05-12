@@ -7,8 +7,6 @@ import com.smartcar.voicesystem.reminderservice.dtos.RegistrationRequest
 import com.smartcar.voicesystem.reminderservice.exceptions.InvalidCredentialException
 import com.smartcar.voicesystem.reminderservice.exceptions.RegistrationConditionUnmetException
 import com.smartcar.voicesystem.reminderservice.repositories.AccountRepository
-import com.smartcar.voicesystem.reminderservice.repositories.OTPRepository
-import com.smartcar.voicesystem.reminderservice.services.OTPService
 import com.smartcar.voicesystem.reminderservice.utils.JWTUtils
 import org.springframework.stereotype.Service
 
@@ -20,12 +18,12 @@ class AuthenticationService(private val otpService: OTPService,
     @Throws(RegistrationConditionUnmetException::class)
     fun register(registrationRequest: RegistrationRequest): OTP {
 
-        val existingAccount = accountRepository.findByUsername(registrationRequest.username)
+        val existingAccount = accountRepository.findByUsernameAndVin(registrationRequest.username, registrationRequest.vin)
         if(existingAccount != null) {
-            throw RegistrationConditionUnmetException("User with username ${registrationRequest.username} is already registered.")
+            throw RegistrationConditionUnmetException("User with username ${registrationRequest.username} and vin ${registrationRequest.vin} is already registered.")
         }
 
-        val otp = otpService.generate(registrationRequest.username)
+        val otp = otpService.generate(registrationRequest.username, registrationRequest.vin)
         val account = registrationRequest.toDomain()
         accountRepository.save(account)
 
@@ -33,11 +31,12 @@ class AuthenticationService(private val otpService: OTPService,
     }
 
     fun authenticate(authRequest: AuthRequest): AuthenticatedUser {
-        val savedOtp = otpService.findByUsername(authRequest.username)
-                ?: throw InvalidCredentialException("Username ${authRequest.username} is invalid")
+        val savedOtp = otpService.findByUsernameAndVin(authRequest.username, authRequest.vin)
+                ?: throw InvalidCredentialException("Username or VIN is invalid")
 
         if(savedOtp.otp == authRequest.otp) {
-            return AuthenticatedUser(username = authRequest.username, accessToken = jwtUtils.createJwt(authRequest.username))
+            return AuthenticatedUser(username = authRequest.username,
+                    accessToken = jwtUtils.createJwt(authRequest.username, authRequest.vin))
         } else {
             throw InvalidCredentialException("OTP is not valid")
         }

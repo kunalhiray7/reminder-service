@@ -49,7 +49,7 @@ class AuthenticationControllerTest {
                 vehicleMake = "Mercedes",
                 vehicleModel = "E-Class"
         )
-        val otp = OTP(otp = "9472")
+        val otp = OTP(otp = "9472", username = registrationRequest.username, vin = registrationRequest.vin)
         doReturn(otp).`when`(authenticationService).register(registrationRequest)
 
         mockMvc.perform(post("/api/registrations")
@@ -79,7 +79,7 @@ class AuthenticationControllerTest {
 
     @Test
     fun `PUT should authenticate the user and return token`() {
-        val authRequest =  AuthRequest(username = "john.smith", otp = "9476")
+        val authRequest =  AuthRequest(username = "john.smith", otp = "9476", vin = "5LMFU28545LJ68295")
         val authenticatedUser = AuthenticatedUser(username = authRequest.username, accessToken = "ertyui.789.fghjk")
         doReturn(authenticatedUser).`when`(authenticationService).authenticate(authRequest)
 

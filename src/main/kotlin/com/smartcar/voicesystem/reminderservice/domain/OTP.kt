@@ -17,5 +17,8 @@ data class OTP(
         val username: String = "",
 
         @get: NotBlank
-        val otp: String = ""
+        val otp: String = "",
+
+        @get: NotBlank
+        val vin: String
 )

@@ -23,11 +23,11 @@ class OTPServiceTest {
 
     @Test
     fun `generate() should generate random OTP and save it`() {
-        val otp = OTP(otp = "9472", username = "username")
+        val otp = OTP(otp = "9472", username = "username", vin = "5LMFU28545LJ68295")
         val captor = ArgumentCaptor.forClass(OTP::class.java)
         doReturn(otp).`when`(otpRepository).save(ArgumentMatchers.any())
 
-        val result = otpService.generate(otp.username)
+        val result = otpService.generate(otp.username, otp.vin)
 
         assertEquals(otp, result)
         verify(otpRepository, times(1)).save(captor.capture())

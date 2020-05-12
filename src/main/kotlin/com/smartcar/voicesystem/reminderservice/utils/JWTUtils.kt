@@ -13,9 +13,10 @@ class JWTUtils {
     private val secret = "voice_system_secret"
     private val header = "Authorization"
 
-    fun createJwt(username: String): String {
+    fun createJwt(username: String, vin: String): String {
         val claims = HashMap<String, Any>()
         claims["username"] = username
+        claims["vin"] = vin
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(username)

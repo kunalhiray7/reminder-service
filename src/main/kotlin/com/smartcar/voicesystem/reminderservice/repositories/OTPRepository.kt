@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface OTPRepository: JpaRepository<OTP, Long> {
-    fun findByUsername(username: String): OTP?
+    fun findByUsernameAndVin(username: String, vin: String): OTP?
 }

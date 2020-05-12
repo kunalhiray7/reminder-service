@@ -8,5 +8,8 @@ data class AuthRequest(
         val username: String,
 
         @get: NotBlank
-        val otp: String
+        val otp: String,
+
+        @get: NotBlank
+        val vin: String
 )
