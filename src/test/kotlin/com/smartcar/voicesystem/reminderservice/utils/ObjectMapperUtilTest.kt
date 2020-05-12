@@ -1,6 +1,6 @@
 package com.smartcar.voicesystem.reminderservice.utils
 
-import com.smartcar.voicesystem.reminderservice.ObjectMapperUtil.getObjectMapper
+import com.smartcar.voicesystem.reminderservice.utils.ObjectMapperUtil.getObjectMapper
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 

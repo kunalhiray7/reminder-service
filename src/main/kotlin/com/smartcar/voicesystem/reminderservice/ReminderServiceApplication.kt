@@ -1,7 +1,7 @@
 package com.smartcar.voicesystem.reminderservice
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.smartcar.voicesystem.reminderservice.ObjectMapperUtil.getObjectMapper
+import com.smartcar.voicesystem.reminderservice.utils.ObjectMapperUtil.getObjectMapper
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean

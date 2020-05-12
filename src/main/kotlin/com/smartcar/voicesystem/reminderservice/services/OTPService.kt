@@ -18,5 +18,7 @@ class OTPService(private val otpRepository: OTPRepository) {
         return otpRepository.save(otp)
     }
 
+    fun findByUsername(username: String): OTP? = otpRepository.findByUsername(username)
+
     private fun generateRandom() = String.format("%04d", Random().nextInt(10000))
 }

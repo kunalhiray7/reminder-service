@@ -27,6 +27,8 @@ dependencies {
 
 	implementation("com.joestelmach:natty:0.11")
 
+	implementation("io.jsonwebtoken:jjwt:0.9.1")
+
 	runtimeOnly("com.h2database:h2")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {

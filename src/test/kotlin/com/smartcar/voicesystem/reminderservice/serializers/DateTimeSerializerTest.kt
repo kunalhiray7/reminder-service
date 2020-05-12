@@ -1,6 +1,6 @@
 package com.smartcar.voicesystem.reminderservice.serializers
 
-import com.smartcar.voicesystem.reminderservice.ObjectMapperUtil.getObjectMapper
+import com.smartcar.voicesystem.reminderservice.utils.ObjectMapperUtil.getObjectMapper
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.time.ZoneOffset

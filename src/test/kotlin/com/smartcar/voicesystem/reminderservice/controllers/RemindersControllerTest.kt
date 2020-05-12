@@ -1,6 +1,6 @@
 package com.smartcar.voicesystem.reminderservice.controllers
 
-import com.smartcar.voicesystem.reminderservice.ObjectMapperUtil.getObjectMapper
+import com.smartcar.voicesystem.reminderservice.utils.ObjectMapperUtil.getObjectMapper
 import com.smartcar.voicesystem.reminderservice.controllers.MessageConverter.jacksonDateTimeConverter
 import com.smartcar.voicesystem.reminderservice.domain.Reminder
 import com.smartcar.voicesystem.reminderservice.dtos.ReminderRequest

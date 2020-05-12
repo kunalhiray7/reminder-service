@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface OTPRepository: JpaRepository<OTP, Long>
+interface OTPRepository: JpaRepository<OTP, Long> {
+    fun findByUsername(username: String): OTP?
+}

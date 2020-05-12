@@ -1,4 +1,4 @@
-package com.smartcar.voicesystem.reminderservice
+package com.smartcar.voicesystem.reminderservice.utils
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
