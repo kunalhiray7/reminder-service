@@ -1,5 +1,6 @@
 package com.smartcar.voicesystem.reminderservice.controllers
 
+import com.smartcar.voicesystem.reminderservice.domain.ReminderType
 import com.smartcar.voicesystem.reminderservice.dtos.ReminderRequest
 import com.smartcar.voicesystem.reminderservice.services.RemindersService
 import io.swagger.annotations.Api
@@ -26,7 +27,7 @@ class RemindersController(private val remindersService: RemindersService) {
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody @Valid reminderRequest: ReminderRequest) = remindersService.create(reminderRequest)
 
-    @ApiOperation(value = "Get all reminders of the user")
+    @ApiOperation(value = "Get all reminders of the user on the current day and for the given categories")
     @ApiResponses(value = [
         ApiResponse(code = 200, message = "Returns the list of reminders of the user or empty list if no reminders found"),
         ApiResponse(code = 400, message = "If userId is missing in the request parameters"),
@@ -34,6 +35,8 @@ class RemindersController(private val remindersService: RemindersService) {
     ]
     )
     @GetMapping("/api/reminders")
-    fun getForUser(@RequestParam(value = "userId", required = true) userId: Long) = remindersService.getForUser(userId)
+    fun getForUser(@RequestParam(value = "userId", required = true) userId: Long,
+                   @RequestParam("category[]", required = false) categories: List<ReminderType>?)
+            = remindersService.getForUser(userId, categories)
 
 }

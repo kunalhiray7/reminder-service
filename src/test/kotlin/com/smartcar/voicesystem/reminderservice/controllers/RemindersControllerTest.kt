@@ -3,6 +3,7 @@ package com.smartcar.voicesystem.reminderservice.controllers
 import com.smartcar.voicesystem.reminderservice.utils.ObjectMapperUtil.getObjectMapper
 import com.smartcar.voicesystem.reminderservice.controllers.MessageConverter.jacksonDateTimeConverter
 import com.smartcar.voicesystem.reminderservice.domain.Reminder
+import com.smartcar.voicesystem.reminderservice.domain.ReminderType.*
 import com.smartcar.voicesystem.reminderservice.dtos.ReminderRequest
 import com.smartcar.voicesystem.reminderservice.exceptions.ReminderCreateConditionUnmetException
 import com.smartcar.voicesystem.reminderservice.services.RemindersService
@@ -97,23 +98,26 @@ class RemindersControllerTest {
         val reminders = listOf(Reminder(
                 id = 234L,
                 userId = userId,
+                type = APPOINTMENT,
                 reminder = "Hey Mercedes, add a new dentist appointment for 10th of November as my reminder",
                 dueDate = ZonedDateTime.of(2020, 9, 10, 0, 0, 0, 0, UTC),
                 createdAt = ZonedDateTime.now(UTC)
         ), Reminder(
                 id = 234L,
                 userId = userId,
+                type = SHOPPING,
                 reminder = "Hey Mercedes, add a reminder as I want to go for shopping on 13th of November",
                 dueDate = ZonedDateTime.of(2020, 9, 13, 0, 0, 0, 0, UTC),
                 createdAt = ZonedDateTime.now(UTC)
         ))
-        doReturn(reminders).`when`(remindersService).getForUser(userId)
+        val categories = listOf(APPOINTMENT, SHOPPING)
+        doReturn(reminders).`when`(remindersService).getForUser(userId, categories)
 
-        mockMvc.perform(get("/api/reminders?userId=$userId"))
+        mockMvc.perform(get("/api/reminders?userId=$userId&category[]=$APPOINTMENT&category[]=$SHOPPING"))
                 .andExpect(status().isOk)
                 .andExpect(content().string(mapper.writeValueAsString(reminders)))
 
-        verify(remindersService, times(1)).getForUser(userId)
+        verify(remindersService, times(1)).getForUser(userId, categories)
     }
 
     @Test

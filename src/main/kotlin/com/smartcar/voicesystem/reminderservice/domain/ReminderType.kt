@@ -1,5 +1,5 @@
 package com.smartcar.voicesystem.reminderservice.domain
 
-enum class ReminderType {
-    APPOINTMENT, SHOPPING, GENERAL
+enum class ReminderType(value: String) {
+    APPOINTMENT("APPOINTMENT"), SHOPPING("SHOPPING"), GENERAL("GENERAL")
 }
