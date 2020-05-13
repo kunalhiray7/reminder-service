@@ -33,5 +33,12 @@ class SecurityConfig(private val jwtUtils: JWTUtils): WebSecurityConfigurerAdapt
         super.configure(web)
         web?.ignoring()?.antMatchers(HttpMethod.POST,"/api/registrations")
                 ?.antMatchers(HttpMethod.PUT,"/api/authentications")
+                ?.antMatchers("/v2/api-docs",
+                        "/configuration/ui",
+                        "/swagger-resources/**",
+                        "/configuration/security",
+                        "/swagger-ui.html",
+                        "/webjars/**")
+                ?.antMatchers("/actuator/*")
     }
 }

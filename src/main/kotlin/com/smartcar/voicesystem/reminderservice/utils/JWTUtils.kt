@@ -19,7 +19,6 @@ import kotlin.collections.HashMap
 class JWTUtils {
     private val expirationInMillis: Long = 1 * 60 * 60 * 1000L
     private val secret = "voice_system_secret"
-    private val header = "Authorization"
 
     fun createJwt(username: String, vin: String): String {
         val claims = HashMap<String, Any>()
