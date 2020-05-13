@@ -33,4 +33,17 @@ class OTPServiceTest {
         verify(otpRepository, times(1)).save(captor.capture())
         assertNotEquals(otp.otp, captor.value.otp)
     }
+
+    @Test
+    fun `findByUsernameAndVin() should return the otp for given username and vin`() {
+        val username = "John.Smith"
+        val vin = "5LMFU28545LJ68295"
+        val otp = OTP(otp = "9472", username = username, vin = vin)
+        doReturn(otp).`when`(otpRepository).findByUsernameAndVin(username, vin)
+
+        val result = otpService.findByUsernameAndVin(username, vin)
+
+        assertEquals(otp, result)
+        verify(otpRepository, times(1)).findByUsernameAndVin(username, vin)
+    }
 }

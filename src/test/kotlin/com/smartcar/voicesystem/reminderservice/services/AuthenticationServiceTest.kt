@@ -1,4 +1,4 @@
-package com.smartcar.voicesystem.reminderservice.controllers
+package com.smartcar.voicesystem.reminderservice.services
 
 import com.smartcar.voicesystem.reminderservice.domain.OTP
 import com.smartcar.voicesystem.reminderservice.dtos.AuthRequest
